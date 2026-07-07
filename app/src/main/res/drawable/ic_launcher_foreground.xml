@@ -1,0 +1,18 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Stylized pixel fountain: a purple column with cascading droplets.
+         Kept as chunky rectangles to echo the nearest-neighbor pixel aesthetic. -->
+    <path android:fillColor="#C74BFF" android:pathData="M50,30h8v8h-8z" />
+    <path android:fillColor="#C74BFF" android:pathData="M42,38h24v8h-24z" />
+    <path android:fillColor="#7A3CFF" android:pathData="M50,46h8v22h-8z" />
+    <path android:fillColor="#7A3CFF" android:pathData="M34,48h8v8h-8z" />
+    <path android:fillColor="#7A3CFF" android:pathData="M66,48h8v8h-8z" />
+    <path android:fillColor="#4DE0E0" android:pathData="M30,58h6v6h-6z" />
+    <path android:fillColor="#4DE0E0" android:pathData="M72,58h6v6h-6z" />
+    <path android:fillColor="#C74BFF" android:pathData="M46,68h16v6h-16z" />
+    <path android:fillColor="#7A3CFF" android:pathData="M40,74h28v6h-28z" />
+</vector>

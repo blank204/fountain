@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Single source of truth for the display name (spec §0). Rename freely here. -->
+    <string name="app_name">Fountain</string>
+    <string name="accessibility_description">Lets Fountain notice when a time-gated app opens and send you home when the time is up. Fountain reads only which app is in front — never screen content. No data leaves your device.</string>
+</resources>
