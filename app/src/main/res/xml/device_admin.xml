@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<device-admin xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-policies>
+        <!-- Only force-lock: lets Fountain turn the screen off. Nothing else. -->
+        <force-lock />
+    </uses-policies>
+</device-admin>

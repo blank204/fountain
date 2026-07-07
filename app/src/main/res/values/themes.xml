@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Framework dark theme, no action bar. Compose supplies the real UI + colors;
+         this only styles the window before Compose draws. Avoids needing the
+         material XML dependency. -->
+    <style name="Theme.Fountain" parent="@android:style/Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/fountain_background</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+</resources>
