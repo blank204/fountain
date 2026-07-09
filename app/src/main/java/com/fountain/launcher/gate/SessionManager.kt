@@ -7,6 +7,8 @@ import android.content.Intent
 import android.os.Build
 import com.fountain.launcher.data.FountainDatabase
 import com.fountain.launcher.data.SessionEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 /**
  * Coordinates a time-gate session's three durable pieces (spec §2.3, v2):
@@ -47,6 +49,27 @@ class SessionManager(private val context: Context) {
 
     /** Every currently-active session. The service decides which ones to end on leave. */
     suspend fun activeSessions(): List<SessionEntity> = dao.getAllActive()
+
+    /**
+     * Live set of active-session packages. The accessibility service collects this into an
+     * in-memory cache so it can decide leave-cancels without a DB read on every app switch.
+     * Room stays the source of truth — this is a read cache fed by the same table.
+     */
+    val activeSessionPackages: Flow<Set<String>> =
+        dao.observeActive().map { sessions -> sessions.mapTo(HashSet()) { it.packageName } }
+
+    /**
+     * Single-read gate decision for [packageName], folding what [activeSession] and
+     * [kickedWithin] would each read separately into one row fetch.
+     */
+    suspend fun gateState(packageName: String, kickWindowMs: Long, now: Long): GateState {
+        val session = dao.get(packageName) ?: return GateState.NONE
+        return when {
+            session.active && session.endEpochMs > now -> GateState.ACTIVE
+            !session.active && now - session.endEpochMs in 0..kickWindowMs -> GateState.RECENTLY_KICKED
+            else -> GateState.NONE
+        }
+    }
 
     /** An active, not-yet-expired session for this package, or null. */
     suspend fun activeSession(packageName: String, now: Long): SessionEntity? =
@@ -99,6 +122,9 @@ class SessionManager(private val context: Context) {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
     }
+
+    /** Outcome of [gateState]: is this gated app already open, just kicked, or fresh? */
+    enum class GateState { ACTIVE, RECENTLY_KICKED, NONE }
 
     companion object {
         const val ACTION_SESSION_EXPIRED = "com.fountain.launcher.SESSION_EXPIRED"
