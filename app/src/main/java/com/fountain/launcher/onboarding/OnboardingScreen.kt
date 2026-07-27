@@ -5,6 +5,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +23,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +40,11 @@ import com.fountain.launcher.common.AccessibilityUtil
 import com.fountain.launcher.common.DeviceLock
 import com.fountain.launcher.common.NotificationAccessUtil
 import com.fountain.launcher.common.SystemAccess
+import com.fountain.launcher.compliance.DisclosureGate
+import com.fountain.launcher.compliance.SensitiveService
+import com.fountain.launcher.data.SettingsRepository
 import com.fountain.launcher.ui.theme.FountainPalette
+import kotlinx.coroutines.launch
 
 /**
  * First-run setup (spec §4). Steps are ordered by importance — default launcher and the
@@ -48,6 +55,11 @@ import com.fountain.launcher.ui.theme.FountainPalette
 fun OnboardingScreen(onFinish: () -> Unit, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
+    val scope = rememberCoroutineScope()
+
+    // Play requires a prominent disclosure before a sensitive service is granted. This
+    // holds whichever one is being disclosed; the gate renders over the step list.
+    var pendingDisclosure by remember { mutableStateOf<SensitiveService?>(null) }
 
     var refresh by remember { mutableIntStateOf(0) }
     DisposableEffect(lifecycleOwner) {
@@ -69,8 +81,9 @@ fun OnboardingScreen(onFinish: () -> Unit, modifier: Modifier = Modifier) {
         ContextCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) ==
         android.content.pm.PackageManager.PERMISSION_GRANTED
 
-    Column(
-        modifier = modifier
+    Box(modifier.fillMaxSize()) {
+        Column(
+        modifier = Modifier
             .fillMaxSize()
             .background(FountainPalette.Background)
             .verticalScroll(rememberScrollState())
@@ -107,14 +120,14 @@ fun OnboardingScreen(onFinish: () -> Unit, modifier: Modifier = Modifier) {
             why = "Accessibility lets Fountain notice a gated app and send you home when time is up.",
             done = AccessibilityUtil.isServiceEnabled(context),
             action = "Enable",
-            onAction = { AccessibilityUtil.openSettings(context) },
+            onAction = { pendingDisclosure = SensitiveService.ACCESSIBILITY },
         )
         Step(
             title = "Capture notifications",
             why = "Optional. Lets the inbox and mute rules work.",
             done = NotificationAccessUtil.isEnabled(context),
             action = "Grant",
-            onAction = { NotificationAccessUtil.openSettings(context) },
+            onAction = { pendingDisclosure = SensitiveService.NOTIFICATION_LISTENER },
         )
         Step(
             title = "Let Fountain post notifications",
@@ -152,6 +165,31 @@ fun OnboardingScreen(onFinish: () -> Unit, modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
         ) {
             Text("Done", style = MaterialTheme.typography.bodyLarge)
+        }
+        }
+
+        // Consent is persisted before the system settings screen opens. A Step only
+        // renders its action button while the service is off, so gating the grant
+        // action gates every enable — no extra conditions needed.
+        pendingDisclosure?.let { service ->
+            DisclosureGate(
+                service = service,
+                onConsent = {
+                    scope.launch {
+                        val repo = SettingsRepository(context)
+                        when (service) {
+                            SensitiveService.ACCESSIBILITY -> repo.setConsentAccessibility(true)
+                            SensitiveService.NOTIFICATION_LISTENER -> repo.setConsentNotifications(true)
+                        }
+                    }
+                    when (service) {
+                        SensitiveService.ACCESSIBILITY -> AccessibilityUtil.openSettings(context)
+                        SensitiveService.NOTIFICATION_LISTENER -> NotificationAccessUtil.openSettings(context)
+                    }
+                    pendingDisclosure = null
+                },
+                onDismiss = { pendingDisclosure = null },
+            )
         }
     }
 }

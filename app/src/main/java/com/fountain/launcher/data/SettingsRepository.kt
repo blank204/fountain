@@ -20,6 +20,8 @@ data class FountainSettings(
     val crtOverlayEnabled: Boolean = true,         // spec §2.6: default ON
     val requireUnlock: Boolean = false,            // spec §2.4: use the device credential to unlock
     val onboardingSeen: Boolean = false,           // first-run setup completed
+    val consentAccessibility: Boolean = false,     // Play disclosure acknowledged
+    val consentNotifications: Boolean = false,     // Play disclosure acknowledged
 )
 
 class SettingsRepository(private val context: Context) {
@@ -32,6 +34,8 @@ class SettingsRepository(private val context: Context) {
             crtOverlayEnabled = p[KEY_CRT_OVERLAY] ?: true,
             requireUnlock = p[KEY_REQUIRE_UNLOCK] ?: false,
             onboardingSeen = p[KEY_ONBOARDING_SEEN] ?: false,
+            consentAccessibility = p[KEY_CONSENT_ACCESSIBILITY] ?: false,
+            consentNotifications = p[KEY_CONSENT_NOTIFICATIONS] ?: false,
         )
     }
 
@@ -53,6 +57,16 @@ class SettingsRepository(private val context: Context) {
     suspend fun setOnboardingSeen(seen: Boolean) =
         edit { it[KEY_ONBOARDING_SEEN] = seen }
 
+    /**
+     * Records that the user acknowledged the Play prominent disclosure. This does not
+     * gate the flow — DisclosureGate already does — it is a record, shown in About.
+     */
+    suspend fun setConsentAccessibility(granted: Boolean) =
+        edit { it[KEY_CONSENT_ACCESSIBILITY] = granted }
+
+    suspend fun setConsentNotifications(granted: Boolean) =
+        edit { it[KEY_CONSENT_NOTIFICATIONS] = granted }
+
     private suspend fun edit(block: (androidx.datastore.preferences.core.MutablePreferences) -> Unit) {
         context.dataStore.edit(block)
     }
@@ -64,5 +78,7 @@ class SettingsRepository(private val context: Context) {
         val KEY_CRT_OVERLAY = booleanPreferencesKey("crt_overlay_enabled")
         val KEY_REQUIRE_UNLOCK = booleanPreferencesKey("require_unlock")
         val KEY_ONBOARDING_SEEN = booleanPreferencesKey("onboarding_seen")
+        val KEY_CONSENT_ACCESSIBILITY = booleanPreferencesKey("consent_accessibility")
+        val KEY_CONSENT_NOTIFICATIONS = booleanPreferencesKey("consent_notifications")
     }
 }
