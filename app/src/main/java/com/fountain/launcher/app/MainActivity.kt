@@ -114,7 +114,6 @@ private fun FountainApp() {
     val setupIncomplete = remember(permCheck) {
         !SystemAccess.isDefaultLauncher(context) ||
             !AccessibilityUtil.isServiceEnabled(context) ||
-            !SystemAccess.canDrawOverlays(context) ||
             !NotificationAccessUtil.isEnabled(context)
     }
 
