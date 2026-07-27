@@ -93,7 +93,7 @@ class AppRepository(private val context: Context) {
             val resolved = pm.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?: return@mapNotNull null
             QuickApp(
-                label = resolved.loadLabel(pm)?.toString()?.ifBlank { fallback } ?: fallback,
+                label = resolved.loadLabel(pm).toString().ifBlank { fallback },
                 icon = resolved.loadIcon(pm),
                 intent = intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
             )
