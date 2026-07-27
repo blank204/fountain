@@ -35,6 +35,7 @@ import com.fountain.launcher.home.HomeScreen
 import com.fountain.launcher.lock.LockScreen
 import com.fountain.launcher.notifications.InboxScreen
 import com.fountain.launcher.onboarding.OnboardingScreen
+import com.fountain.launcher.settings.AboutScreen
 import com.fountain.launcher.settings.GatedAppsScreen
 import com.fountain.launcher.settings.HiddenAppsScreen
 import com.fountain.launcher.settings.NotificationRulesScreen
@@ -47,7 +48,7 @@ import kotlinx.coroutines.launch
 
 /** Screens reachable from the launcher host. Kept as a tiny enum — no nav library needed yet. */
 private enum class Screen {
-    Home, Onboarding, Settings, GatedApps, NotificationRules, Inbox, Behavior, HiddenApps
+    Home, Onboarding, Settings, GatedApps, NotificationRules, Inbox, Behavior, HiddenApps, About
 }
 
 // FragmentActivity (not ComponentActivity) so androidx.biometric can host its prompt.
@@ -161,6 +162,7 @@ private fun FountainApp() {
                     onInbox = { screen = Screen.Inbox },
                     onBehavior = { screen = Screen.Behavior },
                     onHidden = { screen = Screen.HiddenApps },
+                    onAbout = { screen = Screen.About },
                     onBack = { screen = Screen.Home },
                 )
             }
@@ -188,6 +190,11 @@ private fun FountainApp() {
             Screen.HiddenApps -> {
                 BackHandler { screen = Screen.Settings }
                 HiddenAppsScreen(onBack = { screen = Screen.Settings })
+            }
+
+            Screen.About -> {
+                BackHandler { screen = Screen.Settings }
+                AboutScreen(onBack = { screen = Screen.Settings })
             }
         }
         }
