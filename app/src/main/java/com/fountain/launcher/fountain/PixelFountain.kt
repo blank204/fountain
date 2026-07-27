@@ -49,7 +49,7 @@ fun PixelFountain(
         }
 
         Canvas(Modifier.matchParentSize()) {
-            frame // subscribe: redraw each simulated step
+            @Suppress("UNUSED_EXPRESSION") frame // subscribe: redraw each simulated step
             for (p in particles) {
                 val gx = (p.x / cellPx).toInt() * cellPx
                 val gy = (p.y / cellPx).toInt() * cellPx
