@@ -32,8 +32,10 @@ android {
         minSdk = 29
         // Play requires API 35 for new apps now, and API 36 from 2026-08-31.
         targetSdk = 36
-        versionCode = 1
-        versionName = "0.1.0"
+        // versionCode 1 was the GitHub APK release. Play's first upload must be higher,
+        // or anyone who installed from GitHub won't be offered the Play build as an update.
+        versionCode = 2
+        versionName = "1.0.0"
 
         vectorDrawables { useSupportLibrary = true }
     }
