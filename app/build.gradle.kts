@@ -62,6 +62,8 @@ android {
 
     buildFeatures {
         compose = true
+        // Off by default in AGP 8. Settings → About reads BuildConfig.VERSION_NAME.
+        buildConfig = true
     }
     composeOptions {
         // Matches Kotlin 1.9.24.
@@ -98,4 +100,8 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 
     debugImplementation("androidx.compose.ui:ui-tooling")
+
+    // Plain JVM unit tests. These pin the Play-policy disclosure copy and keep the
+    // bundled privacy policy identical to the published one — no emulator needed.
+    testImplementation("junit:junit:4.13.2")
 }
