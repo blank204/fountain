@@ -26,6 +26,7 @@ fun SettingsHubScreen(
     onInbox: () -> Unit,
     onBehavior: () -> Unit,
     onHidden: () -> Unit,
+    onAbout: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -57,6 +58,7 @@ fun SettingsHubScreen(
         HubItem("Inbox", "Notifications Fountain kept for you.", onInbox)
         HubItem("Behavior", "Breathing screen, lock timing, CRT overlay.", onBehavior)
         HubItem("Hidden apps", "Restore apps you've hidden from the list.", onHidden)
+        HubItem("About", "Privacy policy, licences, version.", onAbout)
     }
 }
 
