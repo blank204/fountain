@@ -7,7 +7,7 @@ as assets are added.
 
 | Asset | Path | License | Source |
 |---|---|---|---|
-| Pixelify Sans (variable) | `app/src/main/res/font/pixelify_sans.ttf` | SIL Open Font License 1.1 | Google Fonts — github.com/google/fonts `ofl/pixelifysans` |
+| Pixelify Sans (variable) | `app/src/main/res/font/pixelify_sans.ttf` | SIL Open Font License 1.1 | Copyright 2021 The Pixelify Sans Project Authors (github.com/eifetx/Pixelify-Sans), distributed via Google Fonts `ofl/pixelifysans` |
 | App icon (pixel fountain) | `app/src/main/res/drawable/ic_launcher_foreground.xml` | Original (self-made) | This project |
 | Pixel-pop notification sound | `app/src/main/res/raw/pixel_pop.ogg` | Original (self-made) | This project — synthesized, not sampled |
 
