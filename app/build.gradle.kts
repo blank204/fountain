@@ -14,7 +14,7 @@ val keystoreProps = Properties().apply {
 
 android {
     namespace = "com.fountain.launcher"
-    compileSdk = 34
+    compileSdk = 36
 
     signingConfigs {
         create("release") {
@@ -30,7 +30,8 @@ android {
     defaultConfig {
         applicationId = "com.fountain.launcher"
         minSdk = 29
-        targetSdk = 34
+        // Play requires API 35 for new apps now, and API 36 from 2026-08-31.
+        targetSdk = 36
         versionCode = 1
         versionName = "0.1.0"
 
