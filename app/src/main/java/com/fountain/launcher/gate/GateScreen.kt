@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -53,6 +54,10 @@ fun GateScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(FountainPalette.Background)
+            // Insets first, then the design padding: from targetSdk 35 edge-to-edge is
+            // enforced with no opt-out, so without this the presets sit under the status
+            // and navigation bars.
+            .systemBarsPadding()
             .padding(28.dp),
         contentAlignment = Alignment.Center,
     ) {
