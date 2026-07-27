@@ -96,6 +96,13 @@ double-tap-to-lock gesture that turns the screen off. No wipe, no password
 policy, no device management. It is optional and the app is fully functional
 without it.
 
+**Fountain does not resist uninstallation.** The admin can be revoked from inside
+the app — first-run setup shows a "Turn off" action on the double-tap-to-lock row
+whenever the admin is active, which calls `removeActiveAdmin`. Verified on device:
+with the admin active, uninstalling fails with
+`DELETE_FAILED_DEVICE_POLICY_MANAGER`; after using the in-app "Turn off", the same
+uninstall succeeds. Users are never forced into system settings to remove Fountain.
+
 ## Content rating questionnaire
 
 - Violence, sexuality, profanity, controlled substances, gambling: **No** to all
