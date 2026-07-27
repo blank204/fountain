@@ -206,6 +206,42 @@ Launch headless-friendly, then poll `sys.boot_completed` until it reports `1`.
 Screenshot the gate screen and the home screen via `adb exec-out screencap -p`, so the
 edge-to-edge result is recorded rather than asserted.
 
+## Verification results (2026-07-27)
+
+Run on a hand-created AVD (`fountain_api36`, `android-36.1` `google_apis_playstore`
+x86_64) because no `cmdline-tools`/`avdmanager` is installed. Device reported
+`ro.build.version.release=16`, `ro.build.version.sdk=36`.
+
+**Confirmed on Android 16:**
+
+- App installs and launches; no crash in `logcat -b crash`.
+- Lock screen, onboarding, settings hub, and About all render with content correctly
+  inset — `systemBarsPadding()` holds under enforced edge-to-edge.
+- Pixel font renders correctly; elegant-text-height caused no clipping.
+- Pixel fountain particle animation runs.
+- **The accessibility disclosure appears before any system screen.** After tapping
+  "Enable force-kick", `topResumedActivity` was still `MainActivity` — the system
+  Accessibility settings did not open. This is the Play requirement, verified.
+- **"Not now" is a real decline:** returns to onboarding and
+  `settings get secure enabled_accessibility_services` remained `null`.
+- Consent is not recorded on decline — About showed both disclosures as "not yet shown".
+- `BuildConfig.VERSION_NAME` resolves ("Fountain 0.1.0-debug").
+- **OFL compliance at runtime:** expanding the Pixelify Sans card loaded the bundled
+  asset and displayed the real licence, including the required
+  "Copyright 2021 The Pixelify Sans Project Authors" notice.
+- The deleted overlay onboarding step is absent — seven steps, no "Show the gate over apps".
+
+**Not verified — carry to the Note 9:**
+
+- **`GateScreen` edge-to-edge (the Task 3 fix) was never seen rendered.** `GateActivity`
+  is `exported="false"` so `adb am start` is refused (correct security posture, not
+  worked around), and the bare emulator listed no launchable apps to gate, so the real
+  path to the gate could not be driven. The fix uses the identical
+  `enableEdgeToEdge()` + `systemBarsPadding()` pattern that was confirmed working on four
+  other screens in this same run, so confidence is high — but it is inference, not
+  observation. **Check this first on real hardware.**
+- Predictive back was not exercised.
+
 ## Done criteria
 
 - `assembleDebug` + `testDebugUnitTest` green at compileSdk 36.
