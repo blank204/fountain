@@ -153,6 +153,13 @@ fun OnboardingScreen(onFinish: () -> Unit, modifier: Modifier = Modifier) {
             done = DeviceLock.isAdminActive(context),
             action = "Enable",
             onAction = { DeviceLock.requestAdmin(context) },
+            // Android blocks uninstalling an active device admin, so this must be
+            // revocable here rather than only in system settings.
+            doneAction = "Turn off",
+            onDoneAction = {
+                DeviceLock.removeAdmin(context)
+                refresh++
+            },
         )
 
         Button(
@@ -201,6 +208,14 @@ private fun Step(
     done: Boolean,
     action: String,
     onAction: () -> Unit,
+    /**
+     * Optional action offered once the step is done — currently only device admin, which
+     * must be revocable in-app or Fountain cannot be uninstalled. Leaving this null keeps
+     * the default behaviour: a granted step offers nothing, so the only way to reach a
+     * grant is while it is still off. The disclosure gating below relies on that.
+     */
+    doneAction: String? = null,
+    onDoneAction: (() -> Unit)? = null,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -226,6 +241,10 @@ private fun Step(
         if (!done) {
             TextButton(onClick = onAction) {
                 Text(action, color = FountainPalette.MagentaHi)
+            }
+        } else if (doneAction != null && onDoneAction != null) {
+            TextButton(onClick = onDoneAction) {
+                Text(doneAction, color = FountainPalette.Mono3)
             }
         }
     }
