@@ -39,16 +39,6 @@ object SystemAccess {
         )
     }
 
-    fun canDrawOverlays(context: Context): Boolean = Settings.canDrawOverlays(context)
-
-    fun openOverlaySettings(context: Context) {
-        context.startActivity(
-            Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-                .setData(Uri.parse("package:${context.packageName}"))
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
-    }
-
     fun canScheduleExactAlarms(context: Context): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return true
         val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager

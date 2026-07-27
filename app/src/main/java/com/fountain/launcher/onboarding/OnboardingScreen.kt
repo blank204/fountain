@@ -110,13 +110,6 @@ fun OnboardingScreen(onFinish: () -> Unit, modifier: Modifier = Modifier) {
             onAction = { AccessibilityUtil.openSettings(context) },
         )
         Step(
-            title = "Show the gate over apps",
-            why = "Lets the time picker pop up on top of a gated app — not only inside Fountain.",
-            done = SystemAccess.canDrawOverlays(context),
-            action = "Allow",
-            onAction = { SystemAccess.openOverlaySettings(context) },
-        )
-        Step(
             title = "Capture notifications",
             why = "Optional. Lets the inbox and mute rules work.",
             done = NotificationAccessUtil.isEnabled(context),
