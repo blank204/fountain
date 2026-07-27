@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Process
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
 import com.fountain.launcher.data.SettingsRepository
 import com.fountain.launcher.ui.theme.FountainTheme
@@ -28,6 +29,9 @@ class GateActivity : ComponentActivity() {
     private var targetComponent: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Matches MainActivity. From targetSdk 35 edge-to-edge is enforced anyway; calling
+        // it explicitly keeps the inset behaviour the same on older releases too.
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         targetPackage = intent.getStringExtra(EXTRA_PACKAGE) ?: run { finish(); return }
         targetComponent = intent.getStringExtra(EXTRA_COMPONENT)
