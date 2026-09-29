@@ -1,6 +1,6 @@
 *.iml
 .gradle/
-/local.properties
+local.properties
 .idea/
 .DS_Store
 /build
@@ -11,7 +11,8 @@
 *.apk
 *.aab
 *.keystore
+*.jks
 !debug.keystore
 # Release signing — keep these OFF version control and BACKED UP separately.
-/keystore.properties
+keystore.properties
 /keystore/
