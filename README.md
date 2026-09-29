@@ -9,7 +9,7 @@ device, and it collects nothing. See the [privacy policy](https://blank204.githu
 
 ## Status
 
-Kotlin / Jetpack Compose. minSdk 29, targetSdk 34. Developed against a Samsung
+Kotlin / Jetpack Compose. minSdk 29, targetSdk 36. Developed against a Samsung
 Galaxy Note 9 running Android 10.
 
 ## Building

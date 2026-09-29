@@ -132,7 +132,7 @@ These shape the design. Do not spec around them.
 | Capture/suppress notifications | `NotificationListenerService` | Settings → Notification access |
 | List/launch apps | `QUERY_ALL_PACKAGES` (+ `LauncherApps`) | Manifest (note: Play Console requires justification for this) |
 | Time-gate + lock overlay above other apps | `SYSTEM_ALERT_WINDOW` | Draw-over-apps toggle |
-| Fire the kill on time even in Doze | `SCHEDULE_EXACT_ALARM` / `USE_EXACT_ALARM` | Manifest + (31+) user-grantable exact-alarm access |
+| Fire the kill on time even in Doze | `SCHEDULE_EXACT_ALARM` (not `USE_EXACT_ALARM` — Play restricts that to alarm-clock/calendar apps) | Manifest + (31+) user-grantable exact-alarm access |
 | Show our own inbox + foreground-service notifications | `POST_NOTIFICATIONS` | Runtime prompt (Android 13+) |
 | Keep session-timer service alive | Foreground service (+ `FOREGROUND_SERVICE` and, on 14+, a declared **FGS type**) | Manifest |
 | **Survive One UI battery sleep (critical on the Note 9)** | `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` **+ Samsung "Never sleeping apps"** | Onboarding deep-link to battery settings |
