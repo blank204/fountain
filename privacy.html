@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fountain: Privacy Policy</title>
+<meta name="description" content="Fountain keeps everything on your phone. No accounts, no analytics, no data collection.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --mist: #EEF3F5;
+    --ink: #1C2A33;
+    --water: #2B6F8A;
+    --muted: #5B6B74;
+    --rule: #C9D6DC;
+    --panel: #E3ECEF;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --mist: #121A1F; --ink: #DCE6EA; --water: #7FB8CF;
+      --muted: #93A4AD; --rule: #2A3840; --panel: #19242A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --mist: #121A1F; --ink: #DCE6EA; --water: #7FB8CF;
+    --muted: #93A4AD; --rule: #2A3840; --panel: #19242A;
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0;
+    background: var(--mist);
+    color: var(--ink);
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-size: 1.1875rem;
+    line-height: 1.6;
+  }
+  main {
+    max-width: 38rem;
+    margin: 0 auto;
+    padding: 4.5rem 1.5rem 5rem;
+  }
+  .app { color: var(--water); font-weight: 600; font-size: 1rem; margin: 0 0 1.5rem; }
+  h1 {
+    font-size: clamp(2.6rem, 9vw, 4rem);
+    line-height: 1.02;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.25rem;
+  }
+  .lede { font-size: 1.3rem; color: var(--muted); margin: 0 0 1rem; }
+  .date { font-size: 0.95rem; color: var(--muted); margin: 0 0 3.5rem; }
+  h2 {
+    font-size: 1.45rem;
+    font-weight: 600;
+    margin: 3rem 0 0.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+  }
+  p, li { margin: 0 0 1rem; }
+  ul { padding-left: 1.2rem; margin: 0 0 1rem; }
+  dl { margin: 0; }
+  dt { font-weight: 600; margin-top: 1.25rem; }
+  dd { margin: 0.25rem 0 0; color: var(--ink); }
+  code {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.85em;
+    background: var(--panel);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+    word-break: break-word;
+  }
+  a { color: var(--water); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--water); outline-offset: 3px; border-radius: 2px; }
+  footer { margin-top: 4rem; font-size: 0.95rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <p class="app">Fountain</p>
+  <h1>Nothing leaves your phone.</h1>
+  <p class="lede">Fountain has no accounts, no servers, no analytics and no ads. Everything it knows about how you use your phone stays on your phone.</p>
+  <p class="date">Last updated: September 29, 2026</p>
+
+  <h2>What Fountain collects</h2>
+  <p>Nothing. Fountain does not collect, store remotely, sell or share any personal data. It does not include analytics, crash-reporting or advertising SDKs, and it has no network access at all.</p>
+
+  <h2>What stays on your device</h2>
+  <p>To do its job, Fountain keeps some information locally, in the app's private storage on your phone:</p>
+  <ul>
+    <li>Which apps you've gated, and your settings</li>
+    <li>A history of your time-gated sessions (which app, when, and for how long)</li>
+    <li>Notifications Fountain has captured for its inbox, including their text, if you've given it notification access</li>
+    <li>Your lock PIN, if you've set one</li>
+  </ul>
+  <p>None of this is sent anywhere, and nobody else can see it, including the developer. Uninstalling Fountain or clearing its storage deletes all of it.</p>
+
+  <h2>Permissions, and why each one is needed</h2>
+  <dl>
+    <dt>Home screen (default launcher)</dt>
+    <dd>Fountain is a launcher, so it replaces your home screen when you choose it as the default. You can switch back at any time in your phone's settings.</dd>
+
+    <dt>Accessibility service</dt>
+    <dd>Used only to detect which app is in the foreground, so Fountain can show its time gate when you open a gated app and send you back to the home screen when your session ends. Fountain does not read, record or store anything you type or see on screen.</dd>
+
+    <dt>Notification access</dt>
+    <dd>Used to show notifications in Fountain's own inbox and lock screen, and to hide notifications from apps you've chosen to silence. Captured notifications are stored only on your device and never leave it.</dd>
+
+    <dt>See all installed apps (<code>QUERY_ALL_PACKAGES</code>)</dt>
+    <dd>A launcher needs the full list of installed apps so it can show, search and open them, and let you choose which ones to gate.</dd>
+
+    <dt>Display over other apps</dt>
+    <dd>Used to show the time-gate screen on top of a gated app, and to show Fountain's lock overlay.</dd>
+
+    <dt>Alarms, notifications and background running</dt>
+    <dd>Fountain uses exact alarms and a foreground service so a session ends on time even if your phone tries to put the app to sleep. It posts a persistent notification while it's running, and asks you to exclude it from battery optimization for the same reason.</dd>
+  </dl>
+
+  <h2>Children</h2>
+  <p>Fountain is not directed at children under 13 and collects no data from anyone, of any age.</p>
+
+  <h2>Open source</h2>
+  <p>Fountain's full source code is public, so you can check every claim on this page yourself: <a href="https://github.com/blank204/fountain">github.com/blank204/fountain</a>.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If this policy changes, the updated version will be posted here with a new date. If Fountain ever starts collecting data, this page will say so before that update ships.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about privacy in Fountain: <a href="mailto:gshriadhithya@gmail.com">gshriadhithya@gmail.com</a></p>
+
+  <footer>Fountain is developed by Shri Adhithya Ganesu.</footer>
+</main>
+</body>
+</html>
