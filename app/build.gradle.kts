@@ -28,13 +28,15 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.fountain.launcher"
+        // Differs from namespace on purpose: Play locked the listing to this ID. Kotlin packages stay com.fountain.launcher.
+        applicationId = "io.github.blank204.fountain"
         minSdk = 29
         // Play requires API 35 for new apps now, and API 36 from 2026-08-31.
         targetSdk = 36
-        // versionCode 1 was the GitHub APK release. Play's first upload must be higher,
-        // or anyone who installed from GitHub won't be offered the Play build as an update.
-        versionCode = 2
+        // versionCode 1 was the GitHub APK release (as com.fountain.launcher). The Play build
+        // has a different applicationId, so it installs alongside it rather than updating it.
+        // versionCode 2 was the first Play upload; every new upload needs a higher code.
+        versionCode = 3
         versionName = "1.0.0"
 
         vectorDrawables { useSupportLibrary = true }
