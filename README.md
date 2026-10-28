@@ -34,7 +34,7 @@ before requesting it:
 | `SCHEDULE_EXACT_ALARM` | End a session at its exact deadline, even in Doze. |
 | Device admin (force-lock only) | The optional double-tap-to-lock gesture. |
 
-## Licence
+## License
 
 MIT — see [LICENSE](LICENSE). Bundled third-party assets and their licences are
 listed in [ATTRIBUTIONS.md](ATTRIBUTIONS.md).
