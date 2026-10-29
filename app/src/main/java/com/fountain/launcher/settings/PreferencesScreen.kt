@@ -84,6 +84,13 @@ fun PreferencesScreen(
         )
 
         ToggleRow(
+            title = "Read notifications",
+            subtitle = "Master switch. Off: Fountain ignores all notifications and leaves them in the normal shade, whatever your per-app rules say.",
+            checked = settings.notificationReadingEnabled,
+            onCheckedChange = viewModel::setNotificationReading,
+        )
+
+        ToggleRow(
             title = "CRT overlay",
             subtitle = "Scanlines and flicker on the lock screen.",
             checked = settings.crtOverlayEnabled,
