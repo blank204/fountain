@@ -17,6 +17,7 @@ data class FountainSettings(
     val reopenBreathingEnabled: Boolean = false,   // spec §2.3: default OFF
     val reopenWindowSeconds: Int = 10,             // grace window after a kick
     val idleTimeoutSeconds: Int = 60,              // spec §2.4 lock idle-on-home
+    val notificationReadingEnabled: Boolean = true, // master switch for capturing notifications
     val crtOverlayEnabled: Boolean = true,         // spec §2.6: default ON
     val requireUnlock: Boolean = false,            // spec §2.4: use the device credential to unlock
     val onboardingSeen: Boolean = false,           // first-run setup completed
@@ -31,6 +32,7 @@ class SettingsRepository(private val context: Context) {
             reopenBreathingEnabled = p[KEY_REOPEN_BREATHING] ?: false,
             reopenWindowSeconds = p[KEY_REOPEN_WINDOW] ?: 10,
             idleTimeoutSeconds = p[KEY_IDLE_TIMEOUT] ?: 60,
+            notificationReadingEnabled = p[KEY_NOTIF_READING] ?: true,
             crtOverlayEnabled = p[KEY_CRT_OVERLAY] ?: true,
             requireUnlock = p[KEY_REQUIRE_UNLOCK] ?: false,
             onboardingSeen = p[KEY_ONBOARDING_SEEN] ?: false,
@@ -47,6 +49,9 @@ class SettingsRepository(private val context: Context) {
 
     suspend fun setIdleTimeoutSeconds(seconds: Int) =
         edit { it[KEY_IDLE_TIMEOUT] = seconds }
+
+    suspend fun setNotificationReadingEnabled(enabled: Boolean) =
+        edit { it[KEY_NOTIF_READING] = enabled }
 
     suspend fun setCrtOverlayEnabled(enabled: Boolean) =
         edit { it[KEY_CRT_OVERLAY] = enabled }
@@ -75,6 +80,7 @@ class SettingsRepository(private val context: Context) {
         val KEY_REOPEN_BREATHING = booleanPreferencesKey("reopen_breathing_enabled")
         val KEY_REOPEN_WINDOW = intPreferencesKey("reopen_window_seconds")
         val KEY_IDLE_TIMEOUT = intPreferencesKey("idle_timeout_seconds")
+        val KEY_NOTIF_READING = booleanPreferencesKey("notification_reading_enabled")
         val KEY_CRT_OVERLAY = booleanPreferencesKey("crt_overlay_enabled")
         val KEY_REQUIRE_UNLOCK = booleanPreferencesKey("require_unlock")
         val KEY_ONBOARDING_SEEN = booleanPreferencesKey("onboarding_seen")

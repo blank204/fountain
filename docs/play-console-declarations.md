@@ -61,7 +61,7 @@ disabled (`android:allowBackup="false"`).
 **Justification:**
 
 > Fountain's core feature is a user-initiated countdown: the user explicitly
-> chooses a duration (5, 10, 15, or 20 minutes) for an app, and Fountain returns
+> chooses a duration (1, 5, or 10 minutes) for an app, and Fountain returns
 > them to the home screen when it expires. The session end time is persisted and
 > an exact alarm is scheduled against it, so the deadline holds across process
 > death and Doze. An inexact alarm would let sessions overrun by an arbitrary
@@ -80,7 +80,7 @@ disabled (`android:allowBackup="false"`).
 > foreground service type describes a user-facing focus timer: it plays no
 > media, syncs no data, uses no location, camera, or microphone, and manages no
 > connected device. `shortService` is not usable because it is limited to
-> roughly three minutes while sessions run 5 to 20 minutes. The service is
+> roughly three minutes while sessions run up to 10 minutes. The service is
 > started only when the user has explicitly begun a session and stops when that
 > session ends.
 
@@ -138,9 +138,9 @@ programmatically and a reviewer who skips them will see a non-functional app:
 >    Accessibility usage. Tap "I understand — continue," then enable Fountain in
 >    the system Accessibility settings and return to the app.
 > 3. Back in Fountain, go to Settings → Gated apps and select any installed app.
-> 4. Return to the home list and tap that app. A time picker appears; choose 5
->    minutes and confirm. The app opens and a countdown notification appears.
-> 5. When the timer expires, you are returned to the home screen.
+> 4. Return to the home list and tap that app. A time picker appears; choose 1
+>    minute. The app opens and a countdown notification appears.
+> 5. When the timer expires a minute later, you are returned to the home screen.
 >
 > To exercise the notification inbox, tap "Capture notifications" during setup,
 > accept the disclosure, and enable Fountain in the system Notification access

@@ -7,10 +7,12 @@ import android.service.notification.StatusBarNotification
 import com.fountain.launcher.data.CapturedNotificationEntity
 import com.fountain.launcher.data.NotificationMode
 import com.fountain.launcher.data.NotificationRepository
+import com.fountain.launcher.data.SettingsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 /**
@@ -22,11 +24,13 @@ class FountainNotificationListener : NotificationListenerService() {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private lateinit var repo: NotificationRepository
+    private lateinit var settings: SettingsRepository
     private var sound: PixelSound? = null
 
     override fun onCreate() {
         super.onCreate()
         repo = NotificationRepository(applicationContext)
+        settings = SettingsRepository(applicationContext)
         sound = PixelSound(applicationContext)
     }
 
@@ -37,6 +41,9 @@ class FountainNotificationListener : NotificationListenerService() {
         if (notification.isOngoing) return
 
         scope.launch {
+            // Master switch off: behave like we have no listener at all — leave everything
+            // in the normal shade, ignoring per-app rules.
+            if (!settings.settings.first().notificationReadingEnabled) return@launch
             when (repo.modeFor(notification.packageName)) {
                 NotificationMode.PASSTHROUGH -> Unit
                 NotificationMode.SUPPRESS -> cancelNotification(notification.key)

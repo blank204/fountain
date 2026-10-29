@@ -27,6 +27,9 @@ class PreferencesViewModel(app: Application) : AndroidViewModel(app) {
     fun setIdleTimeout(seconds: Int) =
         launchEdit { repo.setIdleTimeoutSeconds(seconds) }
 
+    fun setNotificationReading(enabled: Boolean) =
+        launchEdit { repo.setNotificationReadingEnabled(enabled) }
+
     fun setCrtOverlay(enabled: Boolean) =
         launchEdit { repo.setCrtOverlayEnabled(enabled) }
 
