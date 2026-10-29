@@ -36,8 +36,8 @@ android {
         // versionCode 1 was the GitHub APK release (as com.fountain.launcher). The Play build
         // has a different applicationId, so it installs alongside it rather than updating it.
         // versionCode 2 was the first Play upload; every new upload needs a higher code.
-        versionCode = 3
-        versionName = "1.0.0"
+        versionCode = 4
+        versionName = "1.1"
 
         vectorDrawables { useSupportLibrary = true }
     }
